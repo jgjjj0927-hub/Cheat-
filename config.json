@@ -1,0 +1,10 @@
+{
+  "esp_enabled": true, "esp_box": true, "esp_name": true, "esp_distance": true,
+  "esp_health": true, "esp_team": false, "esp_max_dist": 2000,
+  "esp_skeleton": false, "esp_weapon": false,
+  "radar_enabled": true, "bomb_enabled": true, "spectator_enabled": true,
+  "aimbot_enabled": false, "aimbot_key": 2, "aimbot_fov": 5.0, "aimbot_smooth": 1.0,
+  "aimbot_team": false, "aimbot_visible": false, "aimbot_mode": "crosshair",
+  "trigger_enabled": false, "trigger_delay": 30, "trigger_fov": 2.0,
+  "bhop_enabled": false, "no_recoil": false
+}
