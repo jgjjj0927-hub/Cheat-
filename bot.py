@@ -1,21 +1,21 @@
 # language: python, file: bot.py — offsets bot + /build, repo Cheat-
+# Все значения вписаны прямо сюда. .env не нужен.
 import os
 import json
 import sys
 import base64
 import requests
-from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
-load_dotenv()
-
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-BOT_CHAT_ID = os.environ.get("BOT_CHAT_ID", "")
-GH_TOKEN = os.environ.get("GH_TOKEN", "")
-GH_REPO = os.environ.get("GH_REPO", "jgjjj0927-hub/Cheat-")
-GH_BRANCH = os.environ.get("GH_BRANCH", "main")
+# ================= НАСТРОЙКИ =================
+BOT_TOKEN = "8922901262:AAEu6Q5V-fo2GAdGQN6Y8qLJ4hNo9b7iZxI"
+BOT_CHAT_ID = "8224529588"
+GH_TOKEN = "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"
+GH_REPO = "jgjjj0927-hub/Cheat-"
+GH_BRANCH = "main"
 WORKFLOW = "build.yml"
+# ==============================================
 
 ALLOWED = {int(x) for x in BOT_CHAT_ID.split(",") if x.strip()}
 OFFSETS_KEY_PREFIX = ("DW_", "M_", "BONE_")
@@ -151,11 +151,11 @@ async def on_button(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
-    if not BOT_TOKEN:
+    if BOT_TOKEN.startswith("ВСТАВЬ"):
         print("BOT_TOKEN не задан"); sys.exit(1)
     if not ALLOWED:
         print("BOT_CHAT_ID не задан"); sys.exit(1)
-    if not GH_TOKEN:
+    if GH_TOKEN.startswith("ВСТАВЬ"):
         print("GH_TOKEN не задан"); sys.exit(1)
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", cmd_start))
