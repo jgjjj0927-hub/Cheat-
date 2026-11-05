@@ -1,16 +1,19 @@
-# language: python, file: bot.py — offsets bot + /build, commits to repo
+# language: python, file: bot.py — offsets bot + /build, repo Cheat-
 import os
 import json
 import sys
 import base64
 import requests
+from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+
+load_dotenv()
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 BOT_CHAT_ID = os.environ.get("BOT_CHAT_ID", "")
 GH_TOKEN = os.environ.get("GH_TOKEN", "")
-GH_REPO = os.environ.get("GH_REPO", "jgjjj0927-hub/Cheat")
+GH_REPO = os.environ.get("GH_REPO", "jgjjj0927-hub/Cheat-")
 GH_BRANCH = os.environ.get("GH_BRANCH", "main")
 WORKFLOW = "build.yml"
 
@@ -30,8 +33,6 @@ def _gh_headers():
 def _gh_get_file(path):
     url = f"https://api.github.com/repos/{GH_REPO}/contents/{path}"
     r = requests.get(url, headers=_gh_headers(), params={"ref": GH_BRANCH}, timeout=10)
-    if r.status_code == 404:
-        return None, None
     if r.status_code != 200:
         return None, None
     data = r.json()
@@ -70,8 +71,9 @@ async def cmd_start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         [InlineKeyboardButton("📥 Загрузить JSON", callback_data="show_json")],
         [InlineKeyboardButton("🔨 Собрать .exe", callback_data="build")],
     ]
-    await update.message.reply_text("CS&SOFT bot\n/set KEY VALUE\n/get\n/build",
-                                    reply_markup=InlineKeyboardMarkup(kb))
+    await update.message.reply_text(
+        f"CS&SOFT bot (repo: {GH_REPO})\n/set KEY VALUE\n/get\n/build",
+        reply_markup=InlineKeyboardMarkup(kb))
 
 
 async def cmd_set(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
@@ -154,7 +156,7 @@ def main():
     if not ALLOWED:
         print("BOT_CHAT_ID не задан"); sys.exit(1)
     if not GH_TOKEN:
-        print("GH_TOKEN не задан (нужен для offsets.json и /build)"); sys.exit(1)
+        print("GH_TOKEN не задан"); sys.exit(1)
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", cmd_start))
     app.add_handler(CommandHandler("set", cmd_set))
